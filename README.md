@@ -1,2 +1,1 @@
-# MVC-MyGuide
-My MVC notes.
+# My MVC notes
