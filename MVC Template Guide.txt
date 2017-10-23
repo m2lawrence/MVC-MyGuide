@@ -1,0 +1,64 @@
+I built an App with this one: 
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/database-first-development/creating-the-web-application
+
+1. Create a MVC Project, and then add the connection string in the Web.config file:
+
+  <!--Add in the connection string here:-->
+  <connectionStrings>
+    <add name="con" connectionString="Data Source=MIKESDELL\SQLEXPRESS;Initial Catalog=mike;Integrated Security=True" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  
+2. RC Model, add, new item, class, MikesDb.cs
+
+3. Here refer "dbContext", this is a class library to talk to the Database.
+   Use a "Code First Approach" here, this is to: Create the Entities and talk to the Database. 
+   Database approach is to link directly with a database instance, so you can call into the class or controller.
+
+4. Add another class to the Model folder: 
+   RC Model folder, add, new item, class.cs, name it the same as your table name: SalesLeadsTable.cs
+
+5. Build your set and get methods inside this class:
+   	public int PersonID { set; get; }
+        public string Date { set; get; }
+        public string Name { set; get; }
+        public string Email { set; get; }
+        public string Mobile { set; get; }
+        public string Country { set; get; }
+
+6. In the other class, "DbContext" is the database, and "DbSet" is the table. Type this code:
+
+    public class MikesDb : DbContext
+    {
+        public DbSet<SalesLeadsTable> SalesLeadsTable { set; get; }
+        
+    }
+
+7. RC Controllers folder, add Controller, Empty MVC5 Controller, name it: SalesLeadsTableController.
+
+8. Save all, build project.
+
+9. RC inside view brackets, Add a View. 
+   Check the box: "Create A Strongly Typed View", choose your Model, Scaffold Template: List, use normal template.
+   This means that the Model will talk to the View and bind according to their properties.
+
+   DisplayNameFor means Name of the variable in the Model.
+   DisplayFor means display the variable in the model.
+
+//------------ Getting the data from the Model to the View: -----------------------
+
+10. In your SalesLeadsTableController do this:
+    Refer your Model to the controller with this: Using SalesLeadsTable.Model;
+
+11. "MikesDb" class needs to be linked here by doing this inside the controller class:
+
+	//create an instance of the database.
+        MikesDb _db = new MikesDb();
+
+12. Make sure that you put this is both the Models!
+//add:
+using System.Data.Entity;
+
+13. In the Route.config file, change the name of the controller to your new one: "SalesLeadsTable".
+
+
+
